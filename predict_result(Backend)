@@ -1,0 +1,70 @@
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
+import tensorflow as tf
+from google.colab import files
+
+# Function to preprocess the input image
+def preprocess_image(img_path):
+    img = load_img(img_path, target_size=(128, 128))
+    img_array = img_to_array(img)
+    img_array = np.expand_dims(img_array, axis=0)
+    img_array /= 255.0  # Normalize the image
+    return img_array
+
+# Function to predict using the CNN model
+def predict_cnn(img_path, model):
+    img_array = preprocess_image(img_path)
+    cnn_prediction_prob = model.predict(img_array)[0][0]  # Probability of being autistic
+    return "The person is with Autism spectrum disorder" if cnn_prediction_prob >= 0.5 else "The person is not with Autism spectrum disorder"
+
+# Load the CNN model (replace 'model_path' with the actual path to your model)
+cnn_model = tf.keras.models.load_model('/content/cnn_model.h5')
+
+# Function to train the SVM model
+def train_svm_model(X, y):
+    global scaler, svm_classifier, X_train, X_test, Y_train, Y_test
+    X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
+
+    svm_classifier = SVC(probability=True)  # Enable probability estimates
+    svm_classifier.fit(X_train_scaled, Y_train)
+
+    svm_train_accuracy = accuracy_score(Y_train, svm_classifier.predict(X_train_scaled))
+    svm_test_accuracy = accuracy_score(Y_test, svm_classifier.predict(X_test_scaled))
+
+    print('SVM training accuracy:', svm_train_accuracy)
+    print('SVM test accuracy:', svm_test_accuracy)
+
+# Function to predict using the SVM model
+def predict_svm(tabular_data):
+    tabular_data = np.asarray(tabular_data).reshape(1, -1)
+    tabular_data = scaler.transform(tabular_data)
+    svm_prediction_prob = svm_classifier.predict_proba(tabular_data)[0][1]  # Probability of being autistic
+    return "The person is with Autism spectrum disorder" if svm_prediction_prob >= 0.5 else "The person is not with Autism spectrum disorder"
+
+# Train the SVM model (replace X and y with your actual tabular dataset)
+X = np.random.rand(100, 13)  # Example data, replace with actual data
+y = np.random.randint(2, size=100)  # Example labels, replace with actual labels
+
+train_svm_model(X, y)
+
+# Example tabular input
+tabular_input = [6,3,1,1,1,1,1,1,1,0,1,0,1]  # Replace with actual data with 13 features
+
+# Predict the result using the SVM model
+result_svm = predict_svm(tabular_input)
+print("Tabular data prediction:", result_svm)
+
+# Upload the image
+uploaded = files.upload()
+image_path = list(uploaded.keys())[0]  # Use the uploaded file's name
+
+# Predict the result using the CNN model
+result_cnn = predict_cnn(image_path, cnn_model)
+print("Image prediction:", result_cnn)

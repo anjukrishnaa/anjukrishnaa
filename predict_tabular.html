@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Using Tabular Data</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Reset and base styles */
+        body {
+            transition: background-color 0.3s ease;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            transition: opacity 0.5s ease, transform 0.3s ease;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 2em;
+            color: #333;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInDown 0.8s forwards;
+        }
+        @keyframes fadeInDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInUp 1s forwards 0.3s;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .navbar a {
+            transition: color 0.3s ease, background-color 0.3s ease;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            background-color: #4A90E2;
+            color: #fff;
+        }
+        .navbar a:hover {
+            color: #FF5733; /* Change to your preferred hover color */
+            background-color: #357ABD;
+            transform: scale(1.05);
+        }
+        .main-content {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 0.6s;
+        }
+        form {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            background: #d9d8d8;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: calc(100% - 12px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        input[type="text"]:focus {
+            border-color: #4A90E2;
+            box-shadow: 0 0 8px rgba(74, 144, 226, 0.2);
+        }
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e6f7ff;
+            border-left: 5px solid #4A90E2;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>ASD Prediction</h1>
+            <nav class="navbar">
+                <a href="{{ url_for('predict_tabular') }}">Predict Using Tabular Data</a>
+                <a href="{{ url_for('predict_image') }}">Predict Using Image</a>
+            </nav>
+        </header>
+        
+        <main>
+            <section class="main-content">
+                <h2><b>Predict Using Tabular Data</b></h2>
+                <h5>Note : Enter 0 for "No" and 1 for "Yes" for the required fields and for SEX enter 0 for "male" and 1 for "female"<br>Social_Responsive_Scale : Rate from 1 to 10 </h5>
+                <form method="post">
+                    {% for feature in feature_names %}
+                        <div class="form-group">
+                            <label for="{{ feature }}">{{ feature }}</label>
+                            <input type="text" id="{{ feature }}" name="{{ feature }}" required>
+                        </div>
+                    {% endfor %}
+                    <button type="submit">Predict</button>
+                </form>
+                {% if prediction %}
+                    <div class="result">
+                        <h3>Prediction Result:</h3>
+                        <p>{{ prediction }}</p>
+                    </div>
+                {% endif %}
+            </section>
+        </main>
+    </div>
+</body>
+</html>

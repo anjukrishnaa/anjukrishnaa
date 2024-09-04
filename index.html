@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autism Spectrum Disorder Prediction</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Reset and base styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .header {
+            background-color: #6BB5FF;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            border-radius: 8px 8px 0 0;
+        }
+        .navbar {
+            background-color: #4A90E2;
+            text-align: center;
+            padding: 10px 0;
+            border-radius: 0 0 8px 8px;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .navbar a:hover {
+            background-color: #357ABD;
+        }
+        h1, h2, h3 {
+            color: #333;
+            text-align: center;
+        }
+        p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        .info-box-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 10px;
+        }
+        .info-box {
+            min-width: 300px;
+            background-color: #ECEFF1;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+        .info-box:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+            background-color: #D6E4F0;
+        }
+        .info-box h3 {
+            color: #4A90E2;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .info-box p {
+            color: #666;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .info-box {
+            animation: fadeIn 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Autism Spectrum Disorder Detection</h1>
+    </div>
+    <div class="navbar">
+        <a href="{{ url_for('predict_tabular') }}">Predict Using Tabular Data</a>
+        <a href="{{ url_for('predict_image') }}">Predict Using Image</a>
+    </div>
+    <div class="container">
+        <h2>About Autism Spectrum Disorder (ASD)</h2>
+        <p>Autism Spectrum Disorder (ASD) is a developmental disorder that affects communication and behavior. It typically appears in early childhood, and its effects can vary significantly from person to person.</p>
+        <div class="info-box-container">
+            <div class="info-box">
+                <h3>Causes of ASD</h3>
+                <p>The exact causes of ASD are not fully understood, but it is believed to involve a combination of genetic and environmental factors. Researchers continue to study the role of genetics, prenatal factors, and early brain development in ASD.</p>
+            </div>
+            
+            <div class="info-box">
+                <h3>Prevalence</h3>
+                <p>ASD is more common than previously thought, with an estimated prevalence of about 1 in 54 children in the United States. Boys are four times more likely to be diagnosed with ASD than girls.</p>
+            </div>
+            
+            <div class="info-box">
+                <h3>Signs and Symptoms</h3>
+                <p>The signs of ASD can include difficulty with social interaction, repetitive behaviors or rituals, sensory sensitivities, delayed language development, and narrow interests or intense focus on specific topics.</p>
+            </div>
+            
+            <div class="info-box">
+                <h3>Screening and Diagnosis</h3>
+                <p>Early screening and diagnosis are crucial for early intervention. Diagnostic criteria include observations of behavior, developmental history, and standardized assessments.</p>
+            </div>
+            
+            <div class="info-box">
+                <h3>Treatment and Support</h3>
+                <p>While there is no cure for ASD, early intervention services can improve a child's development. Treatments often include behavioral therapies, speech and language therapy, and educational support tailored to the individual's needs.</p>
+            </div>
+            
+            <div class="info-box">
+                <h3>Resources and Support Groups</h3>
+                <p>Support groups and resources can provide valuable assistance to families and individuals affected by ASD, offering information, advocacy, and opportunities for social connection.</p>
+            </div>
+            
+            <div class="info-box">
+                <h3>Research and Advances</h3>
+                <p>Ongoing research aims to improve understanding, diagnosis, and treatment options for ASD, including genetic studies, brain imaging, and innovative therapies.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

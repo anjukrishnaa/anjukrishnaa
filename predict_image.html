@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Using Image</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Base styles */
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 2em;
+            color: #333;
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .navbar a {
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            background-color: #4A90E2;
+            color: #fff;
+            transition: none;
+        }
+        .navbar a:hover {
+            color: #FF5733; /* Change to your preferred hover color */
+            background-color: #357ABD;
+        }
+        .main-content {
+            text-align: center;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            background: #e1dfdf;
+            box-shadow: 0 0 10px rgba(4, 4, 4, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="file"] {
+            width: calc(100% - 12px);
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e6f7ff;
+            border-left: 5px solid #4A90E2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>ASD Prediction</h1>
+            <nav class="navbar">
+                <a href="{{ url_for('predict_tabular') }}">Predict Using Tabular Data</a>
+                <a href="{{ url_for('predict_image') }}">Predict Using Image</a>
+            </nav>
+        </header>
+        
+        <main>
+            <section class="main-content">
+                <h2>Predict Using Image</h2>
+                <form method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="file">Upload Image</label>
+                        <input type="file" id="file" name="file" required>
+                    </div>
+                    <button type="submit">Predict</button>
+                </form>
+                {% if prediction %}
+                    <div class="result">
+                        <h3>Prediction Result:</h3>
+                        <p>{{ prediction }}</p>
+                    </div>
+                {% endif %}
+            </section>
+        </main>
+    </div>
+</body>
+</html>
